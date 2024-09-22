@@ -1,8 +1,16 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
-import { useNavigate } from 'react-router-dom';
-import { TextField, Button, Box, Typography, Container } from '@mui/material';
+import { useNavigate, Link } from 'react-router-dom';
+import {
+    Container,
+    TextField,
+    Button,
+    Typography,
+    Box,
+    Avatar,
+} from '@mui/material';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,7 +18,8 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = () => {
+    const handleLogin = (e) => {
+        e.preventDefault();
         // Simulate successful login
         dispatch(login({ email }));
         navigate('/dashboard');
@@ -20,16 +29,19 @@ const Login = () => {
         <Container component="main" maxWidth="xs">
         <Box
             sx={{
+            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            marginTop: 8,
             }}
         >
+            <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+            </Avatar>
             <Typography component="h1" variant="h5">
             Login
             </Typography>
-            <Box component="form" onSubmit={handleLogin} noValidate sx={{ mt: 1 }}>
+            <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
             <TextField
                 margin="normal"
                 required
@@ -59,10 +71,15 @@ const Login = () => {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
-                onClick={handleLogin}
             >
                 Login
             </Button>
+            <Typography variant="body2" align="center">
+                Don&apos;t have an account?{' '}
+                <Link to="/register" style={{ textDecoration: 'none', color: 'blue'}}>
+                Register
+                </Link>
+            </Typography>
             </Box>
         </Box>
         </Container>

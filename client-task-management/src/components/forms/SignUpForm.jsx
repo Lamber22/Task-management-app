@@ -1,4 +1,4 @@
-// src/components/forms/Register.jsx
+// src/components/forms/SignUpForm.jsx
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/authSlice';
@@ -16,7 +16,6 @@ import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    // Add any additional fields like confirm password if necessary
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -79,7 +78,7 @@ const SignUpForm = () => {
             </Button>
             <Typography variant="body2" align="center">
                 Already have an account?{' '}
-                <Link to="/login" style={{ textDecoration: 'none' }}>
+                <Link to="/login" style={{ textDecoration: 'none', color: 'blue'}}>
                 Login
                 </Link>
             </Typography>
