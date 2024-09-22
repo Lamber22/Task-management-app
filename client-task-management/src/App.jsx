@@ -1,9 +1,9 @@
 // import { SignUpForm } from "./components";
-import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 export default function App() {
   return (
     <>
-      <Home />
+      <LandingPage />
     </>
   )
 }

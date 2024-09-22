@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 
-const Home = () => {
+const LandingPage = () => {
     const navigate = useNavigate();
 
     const handleLogin = () => navigate('/login');
@@ -84,4 +84,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default LandingPage;
