@@ -10,7 +10,7 @@ export const register = async (req, res) => {
     try {
         let user = await User.findOne({ email });
         if (user) {
-            return res.status(400).json({ msg: 'User already exists' });
+            return res.status(400).json({ message: 'User already exists' });
         }
 
         user = new User({ email, password });
@@ -22,7 +22,7 @@ export const register = async (req, res) => {
             data: user,
         });
     } catch (err) {
-        res.status(500).json({ msg: 'Server error' });
+        res.status(500).json({ message: 'Server error', error: err });
     }
 };
 
@@ -33,12 +33,12 @@ export const login = async (req, res) => {
     try {
         let user = await User.findOne({ email });
         if (!user) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) {
-            return res.status(400).json({ msg: 'Invalid credentials' });
+            return res.status(400).json({ message: 'Invalid credentials' });
         }
 
         const token = generateToken(user._id);  // Use generateToken function
@@ -48,7 +48,7 @@ export const login = async (req, res) => {
             token: token
         });
     } catch (err) {
-        res.status(500).json({ msg: 'Server error' });
+        res.status(500).json({ message: 'Server error' });
     }
 };
 
