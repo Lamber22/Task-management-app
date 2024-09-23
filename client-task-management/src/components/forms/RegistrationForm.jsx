@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loginUser } from '../../slices/loginSlice'; // Import the login action
+import { registerUser } from '../../slices/registerSlice';
 import { useNavigate, Link } from 'react-router-dom';
 import {
     Container,
@@ -10,25 +10,34 @@ import {
     Box,
     Avatar,
 } from '@mui/material';
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import PersonAddAltOutlinedIcon from '@mui/icons-material/PersonAddAltOutlined';
 
-const Login = () => {
+const RegistrationForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const handleLogin = async (e) => {
+    const handleRegister = async (e) => {
         e.preventDefault();
+
         try {
-            const resultAction = await dispatch(loginUser({ email, password }));
-            if (loginUser.fulfilled.match(resultAction)) {
-                navigate('/dashboard'); // Navigate to dashboard after successful login
+            // Dispatch the registerUser action
+            const resultAction = await dispatch(registerUser({ email, password }));
+
+            // Check if registration was successful
+            if (registerUser.fulfilled.match(resultAction)) {
+                // Alert success message
+                alert('Sign up successful! Please log in to continue.');
+                navigate('/login'); // Navigate to login page
             } else {
-                setErrorMessage(resultAction.payload?.message || 'Login failed. Please try again.');
+                // Handle errors if registration failed
+                const error = resultAction.payload?.message || 'Registration failed';
+                setErrorMessage(error);
             }
         } catch (error) {
+            // Handle unexpected errors
             setErrorMessage('An unexpected error occurred. Please try again.');
         }
     };
@@ -44,12 +53,12 @@ const Login = () => {
                 }}
             >
                 <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                    <LockOutlinedIcon />
+                    <PersonAddAltOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Login
+                    Register
                 </Typography>
-                <Box component="form" onSubmit={handleLogin} sx={{ mt: 1 }}>
+                <Box component="form" onSubmit={handleRegister} sx={{ mt: 1 }}>
                     <TextField
                         margin="normal"
                         required
@@ -70,7 +79,7 @@ const Login = () => {
                         label="Password"
                         type="password"
                         id="password"
-                        autoComplete="current-password"
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -85,12 +94,12 @@ const Login = () => {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Login
+                        Register
                     </Button>
                     <Typography variant="body2" align="center">
-                        Don&apos;t have an account?{' '}
-                        <Link to="/register" style={{ textDecoration: 'none', color: 'blue'}}>
-                            Register
+                        Already have an account?{' '}
+                        <Link to="/login" style={{ textDecoration: 'none', color: 'blue' }}>
+                            Login
                         </Link>
                     </Typography>
                 </Box>
@@ -99,4 +108,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default RegistrationForm;
