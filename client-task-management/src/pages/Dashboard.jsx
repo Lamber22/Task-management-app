@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTasks, createTask, updateTask, deleteTask } from '../slices/taskSlice';
+import { logout } from '../slices/loginSlice';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 // Function to format date
 const formatDate = (dateString) => {
@@ -80,9 +82,15 @@ const Dashboard = () => {
     };
 
     // Handle logout
-    const handleLogout = () => {
-        localStorage.removeItem('token');
-        navigate('/');
+    const handleLogout = async () => {
+        try {
+            await axios.post(`${import.meta.env.VITE_API_BASE_URL}/auth/logout`);
+            dispatch(logout()); // Clear Redux state
+            localStorage.removeItem('token');
+            navigate('/');
+        } catch (error) {
+            console.error('Error logging out:', error);
+        }
     };
 
     // Toggle visibility of task details
