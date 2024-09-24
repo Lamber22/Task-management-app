@@ -12,16 +12,10 @@
    - [Running the Backend](#running-the-backend)
    - [Running the Frontend](#running-the-frontend)
 7. [API Endpoints](#api-endpoints)
-8. [Folder Structure](#folder-structure)
-9. [Environment Variables](#environment-variables)
-10. [Scripts](#scripts)
-11. [Contributing](#contributing)
-12. [License](#license)
-
 ---
 
 ## Project Overview
-The **Task Management System** is a web application designed to simplify task management. It enables users to create, update, organize, and track tasks, making project management more efficient. The application includes user authentication, task categorization, and deadlines, all managed through a responsive interface built with React and Material UI, and powered by a Node.js and Express backend with MongoDB for data storage.
+The **Task Management System** is a web application designed to simplify task management. It enables users to create, update, organize, and track tasks, making project management more efficient. The application includes user authentication, task categorization, and deadlines, all managed through a responsive interface built with React, TailwindCSS and Material UI, and powered by a Node.js and Express backend with MongoDB for data storage.
 
 ## Features
 - User Registration and Login (JWT-based)
@@ -40,7 +34,6 @@ The **Task Management System** is a web application designed to simplify task ma
 - **React Router DOM** (v6.26.2) – for navigation.
 - **Axios** (v1.7.7) – for making HTTP requests to the backend.
 - **Material UI** (v6.1.1) – for UI components and styling.
-- **Emotion** – for styling components.
 - **Tailwind CSS** (v3.4.12) – for utility-based styling.
 - **Vite** – for bundling and running the frontend development server.
 
@@ -65,7 +58,7 @@ Ensure you have the following installed on your machine:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/task-management-system.git
+git clone https://github.com/Lamber22/task-management-system.git
 cd task-management-system
 
 Frontend:
@@ -110,11 +103,11 @@ The frontend will make API requests to the backend running on http://localhost:5
 Here are the available API endpoints in the backend:
 
 ### Authentication
-POST /api/auth/register – Register a new user.
-POST /api/auth/login – Authenticate and log in a user.
+- POST /api/auth/register – Register a new user.
+- POST /api/auth/login – Authenticate and log in a user.
 
 ### Tasks
-GET /api/tasks – Get all tasks for the authenticated user.
-POST /api/tasks – Create a new task.
-PUT /api/tasks/:id – Update a task by ID.
-DELETE /api/tasks/:id – Delete a task by ID.
+- POST /api/tasks – Create a new task.
+- GET /api/tasks – Get all tasks for the authenticated user.
+- PUT /api/tasks/:id – Update a task by ID.
+- DELETE /api/tasks/:id – Delete a task by ID.
