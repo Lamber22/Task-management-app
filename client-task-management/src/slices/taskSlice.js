@@ -7,7 +7,7 @@ const baseUrl = import.meta.env.VITE_API_BASE_URL;
 // Create a new task (POST)
 export const createTask = createAsyncThunk('tasks/createTask', async (task, { rejectWithValue }) => {
     try {
-        const response = await axios.post(`${baseUrl}/task`, task, {
+        const response = await axios.post(`${baseUrl}/task/`, task, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
@@ -21,9 +21,9 @@ export const createTask = createAsyncThunk('tasks/createTask', async (task, { re
 // Fetch all tasks (GET)
 export const fetchTasks = createAsyncThunk('tasks/fetchTasks', async (_, { rejectWithValue }) => {
     try {
-        const response = await axios.get(`${baseUrl}/task`, {
+        const response = await axios.get(`${baseUrl}/task/`, {
             headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')}`, // Assuming JWT is stored in localStorage
+                Authorization: `Bearer ${localStorage.getItem('token')}`, // JWT stored in localStorage
             },
         });
         return response.data.data;
@@ -40,7 +40,7 @@ export const updateTask = createAsyncThunk('tasks/updateTask', async (task, { re
                 Authorization: `Bearer ${localStorage.getItem('token')}`,
             },
         });
-        return response.data.data; // Assuming response contains the updated task
+        return response.data.data; // Returns the updated task
     } catch (error) {
         return rejectWithValue(error.response.data.message || 'Failed to update task');
     }

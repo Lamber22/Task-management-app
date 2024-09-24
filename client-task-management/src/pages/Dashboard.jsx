@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTasks, createTask, updateTask, deleteTask } from '../slices/taskSlice'; // Import all task actions
+import { fetchTasks, createTask, updateTask, deleteTask } from '../slices/taskSlice';
 import { useNavigate } from 'react-router-dom';
+
+// Function to format date
+const formatDate = (dateString) => {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+};
 
 const Dashboard = () => {
     const dispatch = useDispatch();
@@ -18,7 +24,7 @@ const Dashboard = () => {
     }, [token, navigate]);
 
     // Access tasks from Redux store
-    const { tasks = [], status, error } = useSelector((state) => state.tasks); // Ensure tasks is an array
+    const { tasks = [], status, error } = useSelector((state) => state.tasks);
     const [newTask, setNewTask] = useState({
         title: '',
         description: '',
@@ -34,7 +40,7 @@ const Dashboard = () => {
     // Fetch tasks on component mount
     useEffect(() => {
         if (token) {
-            dispatch(fetchTasks({ token })); // Assuming fetchTasks accepts token for authentication
+            dispatch(fetchTasks({ token }));
         }
     }, [dispatch, token]);
 
@@ -61,7 +67,7 @@ const Dashboard = () => {
 
     // Handle deleting a task
     const handleDeleteTask = (taskId) => {
-        dispatch(deleteTask({ taskId, token }));
+        dispatch(deleteTask(taskId));
     };
 
     // Handler for form submission (Add/Update task)
@@ -154,7 +160,9 @@ const Dashboard = () => {
                                 <option value="">Select Category</option>
                                 <option value="Work">Work</option>
                                 <option value="Personal">Personal</option>
-                                <option value="Others">Others</option>
+                                <option value="Shopping">Shopping</option>
+                                <option value="Fitness">Fitness</option>
+                                <option value="Other">Other</option>
                             </select>
 
                             {/* Task Status */}
@@ -188,27 +196,43 @@ const Dashboard = () => {
                     {tasks.length === 0 && <p>No tasks available.</p>}
                     {tasks.length > 0 && (
                         filteredTasks.map((task) => (
-                            <div key={task._id} className="border rounded p-4 mb-4">
-                                <h3 className="text-xl font-bold">
-                                    {task.title}
-                                    <button
-                                        className="ml-2 text-sm text-red-600"
-                                        onClick={() => handleDeleteTask(task._id)}
-                                    >
-                                        Delete
-                                    </button>
-                                </h3>
-                                {/* Task Details */}
-                                <div>
-                                    {visibleTasks[task._id] ? (
-                                        <div>
-                                            <p>{task.description}</p>
-                                            <button onClick={() => toggleTaskVisibility(task._id)}>Hide</button>
-                                        </div>
-                                    ) : (
-                                        <button onClick={() => toggleTaskVisibility(task._id)}>Show Details</button>
-                                    )}
+                            <div key={task._id} className="border rounded-lg p-4 mb-4 bg-white shadow-lg">
+                                <div className="flex justify-between items-center mb-2">
+                                    <h3 className="text-xl font-bold">{task.title}</h3>
+                                    <div>
+                                        <button
+                                            className="text-blue-600 mr-2"
+                                            onClick={() => {
+                                                setNewTask(task);
+                                                setEditingTaskId(task._id);
+                                                setIsFormVisible(true);
+                                            }}
+                                        >
+                                            Edit
+                                        </button>
+                                        <button
+                                            className="text-red-600"
+                                            onClick={() => handleDeleteTask(task._id)}
+                                        >
+                                            Delete
+                                        </button>
+                                    </div>
                                 </div>
+                                <button
+                                    className="mt-2 text-blue-500 underline"
+                                    onClick={() => toggleTaskVisibility(task._id)}
+                                >
+                                    {visibleTasks[task._id] ? 'Hide Details' : 'Show Details'}
+                                </button>
+                                {visibleTasks[task._id] && (
+                                    <div className="mt-2">
+                                        <p><strong>Details:</strong></p>
+                                        <p className="text-gray-700">Description: {task.description}</p>
+                                        <p className="text-gray-700">Due Date: {formatDate(task.dueDate)}</p> {/* Use formatted date */}
+                                        <p className="text-gray-700">Category: {task.category}</p>
+                                        <p className="text-gray-700">Status: {task.status}</p>
+                                    </div>
+                                )}
                             </div>
                         ))
                     )}
