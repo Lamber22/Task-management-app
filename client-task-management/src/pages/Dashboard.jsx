@@ -153,6 +153,7 @@ const Dashboard = () => {
                             <input
                                 type="date"
                                 name="dueDate"
+                                placeholder='Date'
                                 value={newTask.dueDate}
                                 onChange={(e) => setNewTask({ ...newTask, dueDate: e.target.value })}
                                 className="border p-2 rounded w-full mb-2"
@@ -236,9 +237,9 @@ const Dashboard = () => {
                                     <div className="mt-2">
                                         <p><strong>Details:</strong></p>
                                         <p className="text-gray-700">Description: {task.description}</p>
-                                        <p className="text-gray-700">Due Date: {formatDate(task.dueDate)}</p> {/* Use formatted date */}
-                                        <p className="text-gray-700">Category: {task.category}</p>
+                                        <p className="text-gray-700">Due Date: {formatDate(task.dueDate)}</p>
                                         <p className="text-gray-700">Status: {task.status}</p>
+                                        <p className="text-gray-700">Category: {task.category}</p>
                                     </div>
                                 )}
                             </div>
