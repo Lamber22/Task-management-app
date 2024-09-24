@@ -48,7 +48,9 @@ export const login = async (req, res) => {
             token: token
         });
     } catch (err) {
-        res.status(500).json({ message: 'Server error' });
+        if (!res.headersSent) {
+            res.status(500).json({ message: 'Server error', error: err });
+        }
     }
 };
 

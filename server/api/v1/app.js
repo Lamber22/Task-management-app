@@ -4,7 +4,6 @@ import cors from "cors";
 import dbClient from "./config/db.js";
 import authRouter from "./routes/authRoutes.js";
 import taskRouter from "./routes/taskRoutes.js";
-
 const app = express();
 
 // Middleware for parsing JSON request bodies
