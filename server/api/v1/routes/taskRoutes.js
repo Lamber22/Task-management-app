@@ -10,7 +10,7 @@ import {
 import authMiddleware from '../utils/authMiddleware.js';
 const router = Router();
 
-router.post('/new-task', authMiddleware, createTask);
+router.post('/', authMiddleware, createTask);
 router.get('/', authMiddleware, getTasks);
 router.get('/:id', authMiddleware, getTaskByID);
 router.put('/:id', authMiddleware, updateTask);

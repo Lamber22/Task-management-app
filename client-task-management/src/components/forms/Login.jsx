@@ -91,8 +91,13 @@ const Login = () => {
                     </Button>
                     <Typography variant="body2" align="center">
                         Don&apos;t have an account?{' '}
-                        <Link to="/register" style={{ textDecoration: 'none', color: 'blue'}}>
+                        <Link to="/register" style={{ textDecoration: 'none', color: 'blue' }}>
                             Register
+                        </Link>
+                    </Typography>
+                    <Typography variant="body2" align="center" sx={{ mt: 2 }}>
+                        <Link to="#" style={{ textDecoration: 'none', color: 'blue' }}>
+                            Forgot Password?
                         </Link>
                     </Typography>
                 </Box>
