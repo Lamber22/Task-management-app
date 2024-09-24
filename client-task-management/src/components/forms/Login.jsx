@@ -24,7 +24,9 @@ const Login = () => {
         try {
             const resultAction = await dispatch(loginUser({ email, password }));
             if (loginUser.fulfilled.match(resultAction)) {
-                navigate('/dashboard'); // Navigate to dashboard after successful login
+                const token = resultAction.payload.token; // Extract token from the response
+                localStorage.setItem('token', token); // Store token in localStorage
+                navigate('/dashboard', { state: { token } }); // Pass token as state when navigating
             } else {
                 setErrorMessage(resultAction.payload?.message || 'Login failed. Please try again.');
             }
